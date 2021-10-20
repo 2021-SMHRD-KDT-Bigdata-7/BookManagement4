@@ -55,7 +55,7 @@ public class BooKDAO {
 
 		getConn();
 
-		sql = "insert into member values(?,?,?,?,?)";
+		sql = "insert into book values(?,?,?,?,?)";
 
 		try {
 			psmt = conn.prepareStatement(sql);
@@ -76,15 +76,16 @@ public class BooKDAO {
 		return result;
 	}
 
-	public void select(String b_id0) {
+	public void select(String b_id) {
 
 		getConn();
 
 		try {
-			sql = "Select * from member where b_id = b_id0";
+			sql = "Select * from book where b_id = ?";
 
 			psmt = conn.prepareStatement(sql);
-
+			psmt.setString(1, b_id);
+			
 			rs = psmt.executeQuery();
 
 			while (rs.next()) {
@@ -98,7 +99,6 @@ public class BooKDAO {
 						getB_id + "\t" + getB_title + "\t" + getB_author + "\t" + getB_publisher + "\t" + getB_price);
 
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -112,7 +112,7 @@ public class BooKDAO {
 		getConn();
 
 		try {
-			sql = "Select * from member";
+			sql = "Select * from book";
 
 			psmt = conn.prepareStatement(sql);
 
@@ -139,19 +139,23 @@ public class BooKDAO {
 	}
 
 	public int update(String b_id, int b_price) {
+		
 		getConn();
 
-		sql = "update member set b_price=? where b_id=?";
-
 		try {
+			sql = "update book set b_price=? where b_id=?";
+			
 			psmt = conn.prepareStatement(sql);
+			
 			psmt.setInt(1, b_price);
 			psmt.setString(2, b_id);
+			
 			result = psmt.executeUpdate();
 
 		} catch (SQLException e) {
 
 			e.printStackTrace();
+			
 		} finally {
 			close();
 		}
@@ -166,7 +170,7 @@ public class BooKDAO {
 			getConn();
 
 			// 3.실행할 SQL문 작성
-			sql = "delete from member where b_id = ?";
+			sql = "delete from book where b_id = ?";
 
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, b_id);

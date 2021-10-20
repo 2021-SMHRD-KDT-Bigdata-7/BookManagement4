@@ -44,8 +44,11 @@ public class main {
 					int menu2 = sc.nextInt();
 					if(menu2==1) {
 						System.out.println("조회할 도서아이디 : ");
+						
 						b_id=sc.next();
+						
 						dao.select(b_id);
+						
 					}else if(menu2==2) {
 						dao.selectAll();
 					}else {
@@ -56,6 +59,9 @@ public class main {
 				
 				System.out.print("수정할 도서 아이디: ");
 				b_id = sc.next();
+				
+				System.out.print("가격 : ");
+				b_price = sc.nextInt();
 				
 				cnt = dao.update(b_id, b_price);
 				
