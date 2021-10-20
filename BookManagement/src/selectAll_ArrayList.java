@@ -1,4 +1,3 @@
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -6,8 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class BooKDAO {
-
+public class selectAll_ArrayList {
+	
+	
 	Connection conn = null;
 	PreparedStatement psmt = null;
 	ResultSet rs = null;
@@ -70,6 +70,8 @@ public class BooKDAO {
 
 			result = psmt.executeUpdate();
 
+//			book_list.add(new BookVO(b_id, b_title, b_author, b_publisher, b_price));
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -110,38 +112,46 @@ public class BooKDAO {
 		}
 	}
 
+
 	public void selectAll() {
-
-
+		
+		
 		getConn();
-
+		
+			
 		try {
-			sql = "Select * from book";
-
+			sql = "select * from book";
+			
 			psmt = conn.prepareStatement(sql);
-
 			rs = psmt.executeQuery();
-
+			
 			while (rs.next()) {
+				
+				
 				String getB_id = rs.getString(1);
 				String getB_title = rs.getString(2);
 				String getB_author = rs.getString(3);
 				String getB_publisher = rs.getString(4);
 				int getB_price = rs.getInt(5);
 
-				System.out.println(
-						getB_id + "\t" + getB_title + "\t" + getB_author + "\t" + getB_publisher + "\t" + getB_price);
-
+				
+				book_list.add(new BookVO(getB_id, getB_title, getB_author, getB_publisher, getB_price));
+				
 			}
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			// 3.데이터베이스 닫아주기
+			for(int i=0 ; i<book_list.size(); i++) {
+				System.out.println( book_list.get(i).b_id + book_list.get(i).b_title + book_list.get(i).getB_autor() + book_list.get(i).b_publisher
+						+ book_list.get(i).b_price);
+			}
+			}catch(Exception e) {
+				
+				e.printStackTrace();
+				
+		}finally{
 			close();
 		}
-	
+			
 	}
+	
 
 	public int update(String b_id, int b_price) {
 
@@ -194,3 +204,5 @@ public class BooKDAO {
 	}
 
 }
+
+
